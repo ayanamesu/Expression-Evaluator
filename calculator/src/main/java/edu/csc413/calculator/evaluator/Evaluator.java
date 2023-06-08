@@ -17,6 +17,7 @@ public class Evaluator {
     operatorStack = new Stack<>();
   }
 
+
   public int evaluateExpression(String expression) throws InvalidTokenException {
     String expressionToken;
 
