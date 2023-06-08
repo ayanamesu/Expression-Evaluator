@@ -35,7 +35,7 @@ public class Operand {
     public static boolean check(String token) {
         try {
             Integer.parseInt(token);
-        } catch(Exception x){
+        } catch(Exception ex){
             return false;
         }
         return true;
