@@ -33,6 +33,12 @@ public class Operand {
      * operand.
      */
     public static boolean check(String token) {
-        return false;
+        try{
+            Integer.parseInt(token);
+        }catch(Exception ex){
+            return false;
+        }
+        return true;
     }
 }
+
