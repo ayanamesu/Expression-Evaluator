@@ -47,21 +47,21 @@ public class Evaluator {
           // The Operator class should contain an instance of a HashMap,
           // and values will be instances of the Operators.  See Operator class
           // skeleton for an example.
-//          Operator newOperator = new Operator();
-//
-//          while (operatorStack.peek().priority() >= newOperator.priority() ) {
-//            // note that when we eval the expression 1 - 2 we will
-//            // push the 1 then the 2 and then do the subtraction operation
-//            // This means that the first number to be popped is the
-//            // second operand, not the first operand - see the following code
-//            Operator operatorFromStack = operatorStack.pop();
-//            Operand operandTwo = operandStack.pop();
-//            Operand operandOne = operandStack.pop();
-//            Operand result = operatorFromStack.execute( operandOne, operandTwo );
-//            operandStack.push( result );
-//          }
-//
-//          operatorStack.push( newOperator );
+          Operator newOperator = Operator.getOperator(expressionToken);
+
+          while (operatorStack.peek().priority() >= newOperator.priority() ) {
+            // note that when we eval the expression 1 - 2 we will
+            // push the 1 then the 2 and then do the subtraction operation
+            // This means that the first number to be popped is the
+            // second operand, not the first operand - see the following code
+            Operator operatorFromStack = operatorStack.pop();
+            Operand operandTwo = operandStack.pop();
+            Operand operandOne = operandStack.pop();
+            Operand result = operatorFromStack.execute( operandOne, operandTwo );
+            operandStack.push( result );
+          }
+
+          operatorStack.push( newOperator );
         }
       }
     }
