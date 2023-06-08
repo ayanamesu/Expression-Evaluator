@@ -6,7 +6,7 @@ public abstract class Operator {
     private static final HashMap<String, Operator> operators = new HashMap<>();
     //Using static block to initiate the static hash map, this block runs once.
     static {
-        operators.put( "+", new AdditionOperator() );
+        operators.put( "+", new AddOperator() );
         operators.put( "-", new SubtractionOperator() );
 
     }
