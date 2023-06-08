@@ -17,6 +17,16 @@ public class Evaluator {
     operatorStack = new Stack<>();
   }
 
+  //new code
+  public void process() {
+    while (operatorStack.peek().priority() > 1) {
+      Operator operatorFromStack = operatorStack.pop();
+      Operand operandTwo = operandStack.pop();
+      Operand operandOne = operandStack.pop();
+      Operand result = operatorFromStack.execute(operandOne, operandTwo);
+      operandStack.push(result);
+    }
+  }
 
   public int evaluateExpression(String expression) throws InvalidTokenException {
     String expressionToken;
@@ -77,7 +87,16 @@ public class Evaluator {
       // that is, we should keep evaluating the operator stack until it is empty;
       // Suggestion: create a method that processes the operator stack until empty.
 
+    while (operatorStack.peek().priority() > 0 ) {
+      //process();
 
+      Operator operatorCur = operatorStack.pop();
+      Operand operandTwo = operandStack.pop();
+      Operand operandOne = operandStack.pop();
+      Operand result = operatorCur.execute(operandOne, operandTwo);
+      operandStack.push(result);
+
+    }
 
     return operandStack.pop().getValue();
   }

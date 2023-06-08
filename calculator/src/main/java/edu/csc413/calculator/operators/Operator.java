@@ -60,12 +60,13 @@ public abstract class Operator {
      * Think about what happens if we add more operators.
      */
     public static boolean check(String token) {
-        //if (token.equals(operators)) {
+//        if (token.equals(operators)) {
 //            return token.equals("+") || token.equals("-") || token.equals("*")
 //                    || token.equals("/") || token.equals("^");
-       //}
-        return operators.containsKey(token);
-        //return false;
+            //}
+            return operators.containsKey(token);
+            //return false;
+        }
     }
-}
+//}
 
