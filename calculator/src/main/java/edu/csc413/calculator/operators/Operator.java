@@ -3,14 +3,15 @@ package edu.csc413.calculator.operators;
 import edu.csc413.calculator.evaluator.Operand;
 
 public abstract class Operator {
-     static final HashMap<String, Operator> operators = new HashMap<>();
+    static final HashMap<String, Operator> operators = new HashMap<>();
+
     //Using static block to initiate the static hash map, this block runs once.
     static {
-        operators.put( "+", new AddOperator() );
-        operators.put( "-", new SubtractionOperator() );
-        operators.put( "*", new MultiplyOperator() );
-        operators.put( "/", new DivideOperator() );
-        operators.put( "^", new PowerOperator() );
+        operators.put("+", new AddOperator());
+        operators.put("-", new SubtractionOperator());
+        operators.put("*", new MultiplyOperator());
+        operators.put("/", new DivideOperator());
+        operators.put("^", new PowerOperator());
 
     }
     // The Operator class should contain an instance of a HashMap
@@ -26,12 +27,14 @@ public abstract class Operator {
 
     /**
      * retrieve the priority of an Operator
+     *
      * @return priority of an Operator as an int
      */
     public abstract int priority();
 
     /**
      * Abstract method to execute an operator given two operands.
+     *
      * @param operandOne first operand of operator
      * @param operandTwo second operand of operator
      * @return an operand of the result of the operation.
@@ -47,18 +50,16 @@ public abstract class Operator {
      * @return reference to a Operator instance.
      */
     public static Operator getOperator(String token) {
-        return null;
+        return operators.get(token);
     }
-
-    
-     /**
+    /**
      * determines if a given token is a valid operator.
      * please do your best to avoid static checks
      * for example token.equals("+") and so on.
      * Think about what happens if we add more operators.
      */
     public static boolean check(String token) {
-        return false;
+        return token.equals("+") || token.equals("-") || token.equals("*")
+        || token.equals("/")|| token.equals("^");
     }
-
 }
