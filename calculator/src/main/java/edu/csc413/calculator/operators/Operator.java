@@ -1,6 +1,6 @@
 package edu.csc413.calculator.operators;
-
 import edu.csc413.calculator.evaluator.Operand;
+import java.util.HashMap;
 
 public abstract class Operator {
     static final HashMap<String, Operator> operators = new HashMap<>();
@@ -8,7 +8,7 @@ public abstract class Operator {
     //Using static block to initiate the static hash map, this block runs once.
     static {
         operators.put("+", new AddOperator());
-        operators.put("-", new SubtractionOperator());
+        operators.put("-", new SubtractOperator());
         operators.put("*", new MultiplyOperator());
         operators.put("/", new DivideOperator());
         operators.put("^", new PowerOperator());
