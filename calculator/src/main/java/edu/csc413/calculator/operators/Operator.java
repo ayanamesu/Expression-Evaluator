@@ -3,11 +3,14 @@ package edu.csc413.calculator.operators;
 import edu.csc413.calculator.evaluator.Operand;
 
 public abstract class Operator {
-    private static final HashMap<String, Operator> operators = new HashMap<>();
+     static final HashMap<String, Operator> operators = new HashMap<>();
     //Using static block to initiate the static hash map, this block runs once.
     static {
         operators.put( "+", new AddOperator() );
         operators.put( "-", new SubtractionOperator() );
+        operators.put( "*", new MultiplyOperator() );
+        operators.put( "/", new DivideOperator() );
+        operators.put( "^", new PowerOperator() );
 
     }
     // The Operator class should contain an instance of a HashMap
