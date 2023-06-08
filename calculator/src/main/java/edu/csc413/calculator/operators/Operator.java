@@ -52,6 +52,7 @@ public abstract class Operator {
      */
     public static Operator getOperator(String token) {
         return operators.get(token);
+
     }
 
     /**
@@ -63,10 +64,10 @@ public abstract class Operator {
     public static boolean check(String token) {
 //        if (token.equals(operators)) {
 //            return token.equals("+") || token.equals("-") || token.equals("*")
-//                    || token.equals("/") || token.equals("^");
+//                    || token.equals("/") || token.equals("^") || token.equals("(") || token.equals(")");
             //}
             return operators.containsKey(token);
-            //return false;
+
         }
     }
 //}

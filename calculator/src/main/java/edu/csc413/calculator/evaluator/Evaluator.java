@@ -29,6 +29,8 @@ public class Evaluator {
   }
 
   public int evaluateExpression(String expression) throws InvalidTokenException {
+    //new Code
+    operatorStack.push(new LeftParenthesisOperator());
     String expressionToken;
 
     // The 3rd argument is true to indicate that the delimiters should be used
@@ -59,6 +61,8 @@ public class Evaluator {
           // skeleton for an example.
           Operator newOperator = Operator.getOperator(expressionToken);
 
+
+
           while (operatorStack.peek().priority() >= newOperator.priority()) {
             // note that when we eval the expression 1 - 2 we will
             // push the 1 then the 2 and then do the subtraction operation
@@ -87,6 +91,8 @@ public class Evaluator {
       // that is, we should keep evaluating the operator stack until it is empty;
       // Suggestion: create a method that processes the operator stack until empty.
 
+
+    //new code
     while (operatorStack.peek().priority() > 0 ) {
       //process();
 
