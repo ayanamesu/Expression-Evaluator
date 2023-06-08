@@ -3,6 +3,13 @@ package edu.csc413.calculator.operators;
 import edu.csc413.calculator.evaluator.Operand;
 
 public abstract class Operator {
+    private static final HashMap<String, Operator> operators = new HashMap<>();
+    //Using static block to initiate the static hash map, this block runs once.
+    static {
+        operators.put( "+", new AdditionOperator() );
+        operators.put( "-", new SubtractionOperator() );
+
+    }
     // The Operator class should contain an instance of a HashMap
     // This map will use keys as the tokens we're interested in,
     // and values will be instances of the Operators.
@@ -50,4 +57,5 @@ public abstract class Operator {
     public static boolean check(String token) {
         return false;
     }
+
 }
