@@ -52,6 +52,7 @@ public abstract class Operator {
     public static Operator getOperator(String token) {
         return operators.get(token);
     }
+
     /**
      * determines if a given token is a valid operator.
      * please do your best to avoid static checks
@@ -59,7 +60,11 @@ public abstract class Operator {
      * Think about what happens if we add more operators.
      */
     public static boolean check(String token) {
-        return token.equals("+") || token.equals("-") || token.equals("*")
-        || token.equals("/")|| token.equals("^");
+        if (operators.equals(token)) {
+            return token.equals("+") || token.equals("-") || token.equals("*")
+                    || token.equals("/") || token.equals("^");
+        }
+        return false;
     }
 }
+
