@@ -66,6 +66,14 @@ public class Evaluator {
       }
     }
 
+    while (operatorStack.peek().priority() > 0 ) {
+      //process();
+
+      Operator operatorCur = operatorStack.pop();
+      Operand operandTwo = operandStack.pop();
+      Operand operandOne = operandStack.pop();
+      Operand result = operatorCur.execute(operandOne, operandTwo);
+      operandStack.push(result);
 
     // Control gets here when we've picked up all of the tokens; you must add
     // code to complete the evaluation - consider how the code given here
@@ -76,6 +84,6 @@ public class Evaluator {
     // that is, we should keep evaluating the operator stack until it is empty;
     // Suggestion: create a method that processes the operator stack until empty.
 
-    return 0;
+    return operandStack.pop().getValue();
   }
 }
