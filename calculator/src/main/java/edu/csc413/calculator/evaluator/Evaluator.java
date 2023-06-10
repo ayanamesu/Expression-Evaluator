@@ -10,7 +10,7 @@ public class Evaluator {
   private Stack<Operand> operandStack;
   private Stack<Operator> operatorStack;
   private StringTokenizer expressionTokenizer;
-  private final String delimiters = " +/*-^";
+  private final String delimiters = " +/*-^()";
 
   public Evaluator() {
     operandStack = new Stack<>();
