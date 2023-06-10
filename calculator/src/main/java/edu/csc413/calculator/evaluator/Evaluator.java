@@ -30,7 +30,7 @@ public class Evaluator {
 
   public int evaluateExpression(String expression) throws InvalidTokenException {
     //new Code
-    operatorStack.push(new LeftParenthesisOperator());
+
     String expressionToken;
 
     // The 3rd argument is true to indicate that the delimiters should be used
