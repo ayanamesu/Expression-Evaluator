@@ -12,8 +12,8 @@ public abstract class Operator {
         operators.put("*", new MultiplyOperator());
         operators.put("/", new DivideOperator());
         operators.put("^", new PowerOperator());
-        operators.put("(", new LeftParenthesisOperator());
-        operators.put(")", new RightParenthesisOperator());
+//        operators.put("(", new LeftParenthesisOperator());
+//        operators.put(")", new RightParenthesisOperator());
     }
     // The Operator class should contain an instance of a HashMap
     // This map will use keys as the tokens we're interested in,
@@ -62,13 +62,12 @@ public abstract class Operator {
      * Think about what happens if we add more operators.
      */
     public static boolean check(String token) {
-//        if (token.equals(operators)) {
 //            return token.equals("+") || token.equals("-") || token.equals("*")
 //                    || token.equals("/") || token.equals("^") || token.equals("(") || token.equals(")");
-            //}
+
             return operators.containsKey(token);
 
         }
     }
-//}
+
 
