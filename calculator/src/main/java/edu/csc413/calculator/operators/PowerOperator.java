@@ -11,12 +11,11 @@ public class PowerOperator extends Operator {
         Operand sum = new Operand (power(operandOne.getValue(),operandTwo.getValue()));
         return sum;
     }
-public int power(int i, int j) {
-    int sum = i;
-    for (int count = 2; count < j; count++) {
-        sum = sum * i;
-    }
-    return sum;
+    public int power(int i, int j) {
+        int sum = i;
+        for (int count = 2; count <= j; count++) {
+            sum = sum * i;
+        }
+        return sum;
     }
 }
-

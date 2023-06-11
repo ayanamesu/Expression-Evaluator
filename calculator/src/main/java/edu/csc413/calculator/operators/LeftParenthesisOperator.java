@@ -10,6 +10,6 @@ public class LeftParenthesisOperator extends Operator {
 
     @Override
     public Operand execute(Operand operandOne, Operand operandTwo) {
-        return null;
+        return operandOne;
     }
 }

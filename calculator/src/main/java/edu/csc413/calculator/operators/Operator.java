@@ -62,9 +62,6 @@ public abstract class Operator {
      * Think about what happens if we add more operators.
      */
     public static boolean check(String token) {
-//            return token.equals("+") || token.equals("-") || token.equals("*")
-//                    || token.equals("/") || token.equals("^") || token.equals("(") || token.equals(")");
-
             return operators.containsKey(token);
 
         }
