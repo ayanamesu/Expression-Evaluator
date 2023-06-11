@@ -19,17 +19,19 @@ public class Evaluator {
 
 
   //code that could be removed
-  public void process() {
-    while (operatorStack.peek().priority() > 1) {
-      Operator operatorFromStack = operatorStack.pop();
-      Operand operandTwo = operandStack.pop();
-      Operand operandOne = operandStack.pop();
-      Operand result = operatorFromStack.execute(operandOne, operandTwo);
-      operandStack.push(result);
-    }
+  private void process() {
+    Operator operatorFromStack = operatorStack.pop();
+    Operand operandTwo = operandStack.pop();
+    Operand operandOne = operandStack.pop();
+    Operand result = operatorFromStack.execute(operandOne, operandTwo);
+    operandStack.push(result);
 
   }
-
+  private void processOperatorStack() {
+    while (!operatorStack.isEmpty() && operatorStack.peek().priority() > 0) {
+      process();
+    }
+  }
 
 
 
@@ -46,9 +48,7 @@ public class Evaluator {
     // the usual mathematical operators - "+-*/" - should be less than the priority
     // of the usual operators
 
-    //Original
-    while (this.expressionTokenizer.hasMoreTokens()) {
-      // filter out spaces
+    while (this.expressionTokenizer.hasMoreTokens()) { // filter out spaces
       if (!(expressionToken = this.expressionTokenizer.nextToken()).equals(" ")) {
         // check if token is an operand
         if (Operand.check(expressionToken)) {
@@ -59,63 +59,60 @@ public class Evaluator {
           }
 
 
-        // TODO Operator is abstract - these two lines will need to be fixed:
-        // The Operator class should contain an instance of a HashMap,
-        // and values will be instances of the Operators.  See Operator class
-        // skeleton for an example.
-        Operator newOperator = Operator.getOperator(expressionToken); //getting the operator object
+          // TODO Operator is abstract - these two lines will need to be fixed:
+          // The Operator class should contain an instance of a HashMap,
+          // and values will be instances of the Operators.  See Operator class
+          // skeleton for an example.
+//          if (Operand.check(expressionToken)) {
+//            operandStack.push(new Operand(expressionToken));
+//          } else if (Operator.check(expressionToken)) {
+//          Operator newOperator = Operator.getOperator(expressionToken); //getting the operator object
+          if (expressionToken.equals("(")) {
+            operatorStack.push(new LeftParenthesisOperator());
+          } else if (expressionToken.equals(")")) {
+            processOperatorStack();
+            operatorStack.pop(); // Discard the left parenthesis
+          } else {
+            Operator newOperator = Operator.getOperator(expressionToken);
 
-          //code that could be removed
-        if (expressionToken.equals("(")) {
-          operatorStack.push(newOperator);
+            while (operatorStack.peek().priority() >= newOperator.priority()) {
+              process();
+              // note that when we eval the expression 1 - 2 we will
+              // push the 1 then the 2 and then do the subtraction operation
+              // This means that the first number to be popped is the
+              // second operand, not the first operand - see the following code
+              Operator operatorFromStack = operatorStack.pop();
+              Operand operandTwo = operandStack.pop();
+              Operand operandOne = operandStack.pop();
+              Operand result = operatorFromStack.execute(operandOne, operandTwo);
+              operandStack.push(result);
+            }
 
-        } else if (expressionToken.equals(")")) {
-          process();
-          operatorStack.pop();
-
-
-        } else if (operatorStack.isEmpty()) {
-          operatorStack.add(newOperator);
-
+            operatorStack.push(newOperator);
+          }
         }
-        //Original
-        while (operatorStack.peek().priority() >= newOperator.priority()) {
-          process();
-          // note that when we eval the expression 1 - 2 we will
-          // push the 1 then the 2 and then do the subtraction operation
-          // This means that the first number to be popped is the
-          // second operand, not the first operand - see the following code
-          Operator operatorFromStack = operatorStack.pop();
-          Operand operandTwo = operandStack.pop();
-          Operand operandOne = operandStack.pop();
-          Operand result = operatorFromStack.execute(operandOne, operandTwo);
-          operandStack.push(result);
-        }
-
-        operatorStack.push(newOperator);
         }
       }
-    }
-    //code that could be removed
-    while (operatorStack.peek().priority() > 0) {
-      Operator operator2 = operatorStack.pop();
-      Operand operandTwo = operandStack.pop();
-      Operand operandOne = operandStack.pop();
-      Operand result = operator2.execute(operandOne, operandTwo);
-      operandStack.push(result);
-    }
+      //code that could be removed
+      while (operatorStack.peek().priority() > 0) {
+        Operator operator2 = operatorStack.pop();
+        Operand operandTwo = operandStack.pop();
+        Operand operandOne = operandStack.pop();
+        Operand result = operator2.execute(operandOne, operandTwo);
+        operandStack.push(result);
+      }
 
 
-    // Control gets here when we've picked up all of the tokens; you must add
-    // code to complete the evaluation - consider how the code given here
-    // will evaluate the expression 1+2*3
-    // When we have no more tokens to scan, the operand stack will contain 1 2
-    // and the operator stack will have + * with 2 and * on the top;
-    // In order to complete the evaluation we must empty the stacks,
-    // that is, we should keep evaluating the operator stack until it is empty;
-    // Suggestion: create a method that processes the operator stack until empty.
+      // Control gets here when we've picked up all of the tokens; you must add
+      // code to complete the evaluation - consider how the code given here
+      // will evaluate the expression 1+2*3
+      // When we have no more tokens to scan, the operand stack will contain 1 2
+      // and the operator stack will have + * with 2 and * on the top;
+      // In order to complete the evaluation we must empty the stacks,
+      // that is, we should keep evaluating the operator stack until it is empty;
+      // Suggestion: create a method that processes the operator stack until empty.
 
-    return operandStack.pop().getValue();
+      return operandStack.pop().getValue();
     }
 
   }
