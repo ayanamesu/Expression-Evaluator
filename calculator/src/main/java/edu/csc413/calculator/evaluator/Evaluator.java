@@ -1,10 +1,7 @@
 package edu.csc413.calculator.evaluator;
-
 import edu.csc413.calculator.operators.*;
-
 import java.util.Stack;
 import java.util.StringTokenizer;
-
 public class Evaluator {
 
   private Stack<Operand> operandStack;
@@ -75,17 +72,12 @@ public class Evaluator {
           } else {
             Operator newOperator = Operator.getOperator(expressionToken);
 
-            while (operatorStack.peek().priority() >= newOperator.priority()) {
+            while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority()) {
               process();
               // note that when we eval the expression 1 - 2 we will
               // push the 1 then the 2 and then do the subtraction operation
               // This means that the first number to be popped is the
               // second operand, not the first operand - see the following code
-              Operator operatorFromStack = operatorStack.pop();
-              Operand operandTwo = operandStack.pop();
-              Operand operandOne = operandStack.pop();
-              Operand result = operatorFromStack.execute(operandOne, operandTwo);
-              operandStack.push(result);
             }
 
             operatorStack.push(newOperator);
@@ -93,14 +85,19 @@ public class Evaluator {
         }
         }
       }
+    while (!operatorStack.isEmpty() && !(operatorStack.peek() instanceof LeftParenthesisOperator)) {
+      process();
+
+
+    }
       //code that could be removed
-      while (operatorStack.peek().priority() > 0) {
-        Operator operator2 = operatorStack.pop();
-        Operand operandTwo = operandStack.pop();
-        Operand operandOne = operandStack.pop();
-        Operand result = operator2.execute(operandOne, operandTwo);
-        operandStack.push(result);
-      }
+//      while (operatorStack.peek().priority() > 0) {
+//        Operator operator2 = operatorStack.pop();
+//        Operand operandTwo = operandStack.pop();
+//        Operand operandOne = operandStack.pop();
+//        Operand result = operator2.execute(operandOne, operandTwo);
+//        operandStack.push(result);
+//      }
 
 
       // Control gets here when we've picked up all of the tokens; you must add
