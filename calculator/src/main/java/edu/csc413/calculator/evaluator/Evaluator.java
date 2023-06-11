@@ -4,7 +4,7 @@ import edu.csc413.calculator.operators.*;
 
 import java.util.Stack;
 import java.util.StringTokenizer;
-
+import edu.csc413.calculator.operators.Operator;
 public class Evaluator {
 
   private Stack<Operand> operandStack;
@@ -17,10 +17,19 @@ public class Evaluator {
     operatorStack = new Stack<>();
   }
 
+  public void process(){
+    while(operatorStack.peek().priority() > 1){
+      Operator operatorFromStack = operatorStack.pop();
+      Operand operandTwo = operandStack.pop();
+      Operand operandOne = operandStack.pop();
+      Operand result = operatorFromStack.execute( operandOne, operandTwo );
+      operandStack.push( result );
+    }
+  }
+
 
 
   public int evaluateExpression(String expression) throws InvalidTokenException {
-
 
     String expressionToken;
 
@@ -50,8 +59,27 @@ public class Evaluator {
           // The Operator class should contain an instance of a HashMap,
           // and values will be instances of the Operators.  See Operator class
           // skeleton for an example.
-          Operator newOperator = Operator.getOperator(expressionToken);
+          Operator newOperator = Operator.getOperator(expressionToken); //getting the operator object
 
+
+          if(expressionToken.equals("(")){
+            operatorStack.push(newOperator);
+            continue;
+          }
+
+          else if(expressionToken.equals(")")){
+            process();
+            operatorStack.pop();
+            //operatorStack.push(newOperator);
+            continue;
+          }
+
+
+
+          else if(operatorStack.isEmpty()){
+            operatorStack.add(newOperator);
+            continue;
+          }
 
 
           while (operatorStack.peek().priority() >= newOperator.priority()) {
@@ -70,7 +98,14 @@ public class Evaluator {
         }
       }
     }
-
+    //p
+    while (operatorStack.peek().priority() > 0 ) {
+      Operator operatorFromStack = operatorStack.pop();
+      Operand operandTwo = operandStack.pop();
+      Operand operandOne = operandStack.pop();
+      Operand result = operatorFromStack.execute(operandOne, operandTwo);
+      operandStack.push(result);
+    }
 
 
       // Control gets here when we've picked up all of the tokens; you must add
