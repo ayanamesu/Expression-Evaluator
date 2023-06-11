@@ -40,14 +40,14 @@ public class Evaluator {
     // as tokens, too. But, we'll need to remember to filter out spaces.
     this.expressionTokenizer = new StringTokenizer(expression, this.delimiters, true);
 
+
     // initialize operator stack - necessary with operator priority schema
     // the priority of any operator in the operator stack other than
     // the usual mathematical operators - "+-*/" - should be less than the priority
     // of the usual operators
 
     while (this.expressionTokenizer.hasMoreTokens()) { // filter out spaces
-      if (!(expressionToken = this.expressionTokenizer.nextToken()).equals(" ")) {
-        // check if token is an operand
+      if (!(expressionToken = this.expressionTokenizer.nextToken()).equals(" ")) { // check if token is an operand
         if (Operand.check(expressionToken)) {
           operandStack.push(new Operand(expressionToken));
         } else {
@@ -66,14 +66,17 @@ public class Evaluator {
 //          Operator newOperator = Operator.getOperator(expressionToken); //getting the operator object
           if (expressionToken.equals("(")) {
             operatorStack.push(new LeftParenthesisOperator());
+
           } else if (expressionToken.equals(")")) {
             processOperatorStack();
+
             operatorStack.pop(); // Discard the left parenthesis
           } else {
             Operator newOperator = Operator.getOperator(expressionToken);
 
             while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority()) {
               process();
+
               // note that when we eval the expression 1 - 2 we will
               // push the 1 then the 2 and then do the subtraction operation
               // This means that the first number to be popped is the
@@ -90,15 +93,6 @@ public class Evaluator {
 
 
     }
-      //code that could be removed
-//      while (operatorStack.peek().priority() > 0) {
-//        Operator operator2 = operatorStack.pop();
-//        Operand operandTwo = operandStack.pop();
-//        Operand operandOne = operandStack.pop();
-//        Operand result = operator2.execute(operandOne, operandTwo);
-//        operandStack.push(result);
-//      }
-
 
       // Control gets here when we've picked up all of the tokens; you must add
       // code to complete the evaluation - consider how the code given here
@@ -109,6 +103,20 @@ public class Evaluator {
       // that is, we should keep evaluating the operator stack until it is empty;
       // Suggestion: create a method that processes the operator stack until empty.
 
+    //THIS IS TO CHECK IF THE EXPRESSION HAS FILLED IN PARENTHESIS OR if there are other messy Parenthesis
+    char[] c = expression.toCharArray();
+    int counter = 0;
+
+    for (int i = 0; i < c.length ; i++){
+      if (c[i] == '(')
+        counter++;
+      if (c[i] == ')')
+        counter--;
+    }
+
+    System.out.println(counter);
+    if (counter != 0)
+      throw new InvalidTokenException(expression);
       return operandStack.pop().getValue();
     }
 
