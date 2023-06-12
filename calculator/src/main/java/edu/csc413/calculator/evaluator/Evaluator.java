@@ -72,7 +72,7 @@ public class Evaluator {
 
             operatorStack.pop(); // Discard the left parenthesis
           } else {
-            Operator newOperator = Operator.getOperator(expressionToken);
+            Operator newOperator = Operator.getOperator(expressionToken); //getting the operator object
 
             while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority()) {
               process();

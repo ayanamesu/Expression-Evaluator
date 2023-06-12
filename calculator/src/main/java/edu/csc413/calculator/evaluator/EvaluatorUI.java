@@ -9,7 +9,7 @@ public class EvaluatorUI extends JFrame implements ActionListener {
 
     private JTextField expressionTextField = new JTextField();
     private JPanel buttonPanel = new JPanel();
-
+    private Evaluator evaluator = new Evaluator();
     // total of 20 buttons on the calculator,
     // numbered from left to right, top to bottom
     // bText[] array contains the text for corresponding buttons
@@ -75,44 +75,31 @@ public class EvaluatorUI extends JFrame implements ActionListener {
      *                    button is pressed.
      */
     public void actionPerformed(ActionEvent actionEventObject) {
+        String button = actionEventObject.getActionCommand();
 
-        String temp;
-
-        if ((!actionEventObject.getActionCommand().equals("=")) && (!actionEventObject.getActionCommand().equals("C")) && (!actionEventObject.getActionCommand().equals("CE"))) { //Only numbers and mathematical operators
-            this.expressionTextField.setText(this.expressionTextField.getText() + actionEventObject.getActionCommand()); //We display the user's input on the calculator screen by appending to the previous screen value
-        } else if (actionEventObject.getActionCommand().equals("=")) {  //if user puts in an equal sign
-            Evaluator eval = new Evaluator();
-            temp = this.expressionTextField.getText();  //temporarily storing the previous field value for evaluation
-//            try {    //We use a try catch to account for the possibility that the user may enter an invalid expression which would prompt the Evaluator to throw an exception
-//                int result = eval.evaluateExpression(temp);
-//                this.expressionTextField.setText(this.expressionTextField.getText() + "=" + result); //Appending an equal sign and the result of the evaluation(for valid expressions)
-//            } catch (Exception x) {     //Catching exception
-//                this.expressionTextField.setText("Invalid!!!(Press C to clear)");
-//            }
-
-        }
-        if (actionEventObject.getActionCommand().equals("C")) {
-            this.expressionTextField.setText("");       //removes entries "C" on calculator function
-        }
-        if (actionEventObject.getActionCommand().equals("CE")) {
-            String last_entry = this.expressionTextField.getText();   //stores last_entry temporarily
-            int last_operator_index = 0;                //this variable will hold the index of the last operator
-            for (int i = last_entry.length() - 1; i >= 0; i--) { //We start at the end because that is much more efficient to find the last(right-most) operator
-                String str = String.valueOf(last_entry.charAt(i));    //str holds a String of the value of the character at a certain position
-                if (Operator.check(str)) {    //if operator, we update index and break, because we want the last index and we are going left to right
-                    last_operator_index = i;
-                    break;
-                }
-
+        if (button.equals("=")) {
+            // Evaluate the expression when "=" button is pressed
+            String expression = expressionTextField.getText();
+            try {
+                int result = evaluator.evaluateExpression(expression);
+                expressionTextField.setText(String.valueOf(result));
+            } catch (InvalidTokenException ex) {
+                expressionTextField.setText("*** Invalid Token ***");
             }
-            //Now we copy from the last entry string to the new string up to(not including) last operator or last operand
-            char old_arr[] = last_entry.toCharArray();
-            char[] arr = new char[old_arr.length];
-            for (int i = 0; i < last_operator_index; i++) {
-                arr[i] = old_arr[i];
+        } else if (button.equals("C")) {
+            // Clears the expression when "C"  is pressed
+            expressionTextField.setText("");
+        } else if (button.equals("CE")) {
+            // Clears the last entry until the last operator when "CE" button is pressed
+            String expression = expressionTextField.getText();
+            if (!expression.isEmpty()) {
+                expressionTextField.setText(expression.substring(0, expression.lastIndexOf(' ') + 1));
             }
-            String new_txt = new String(arr);
-            expressionTextField.setText(new_txt);
+        } else {
+            // Appends the corresponding button text to the expression text field
+            expressionTextField.setText(expressionTextField.getText() + button);
         }
     }
 }
+
+
