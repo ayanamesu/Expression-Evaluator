@@ -85,7 +85,8 @@ public class EvaluatorUI extends JFrame implements ActionListener {
                 expressionTextField.setText(String.valueOf(result));
             } catch (InvalidTokenException ex) {
                 expressionTextField.setText("*** Invalid Token ***");
-            }
+            } 
+
         } else if (button.equals("C")) {
             // Clears the expression when "C"  is pressed
             expressionTextField.setText("");
@@ -93,13 +94,16 @@ public class EvaluatorUI extends JFrame implements ActionListener {
             // Clears the last entry until the last operator when "CE" button is pressed
             String expression = expressionTextField.getText();
             if (!expression.isEmpty()) {
-                expressionTextField.setText(expression.substring(0, expression.lastIndexOf(' ') + 1));
+                expressionTextField.setText(expression.substring(0, expression.length() - 1));
             }
         } else {
             // Appends the corresponding button text to the expression text field
             expressionTextField.setText(expressionTextField.getText() + button);
+
         }
+
     }
-}
+    }
+
 
 

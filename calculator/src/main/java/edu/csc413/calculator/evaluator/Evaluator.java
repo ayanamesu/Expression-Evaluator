@@ -104,18 +104,37 @@ public class Evaluator {
       // Suggestion: create a method that processes the operator stack until empty.
 
     //THIS IS TO CHECK IF THE EXPRESSION HAS FILLED IN PARENTHESIS OR if there are other messy Parenthesis
+//    char[] c = expression.toCharArray();
+//    int counter = 0;
+//
+//    for (int i = 0; i < c.length ; i++){
+//      if (c[i] == '(')
+//        counter++;
+//      if (c[i] == ')')
+//        counter--;
+//    }
+//
+//    System.out.println(counter);
+//    if (counter != 0)
+//      throw new InvalidTokenException(expression);
     char[] c = expression.toCharArray();
-    int counter = 0;
+    Stack<Integer> stack = new Stack<>();
+    int poppedElement = 0;
 
     for (int i = 0; i < c.length ; i++){
       if (c[i] == '(')
-        counter++;
-      if (c[i] == ')')
-        counter--;
+        stack.push(i);
+      else if (c[i] == ')'){
+        if (stack.size()>0)
+          poppedElement = stack.pop();
+        else
+          throw new InvalidTokenException(expression + " " + "Illegal");
+        if (i-poppedElement<=1)
+          throw new InvalidTokenException("Empty parenthesis");
+      }
     }
 
-    System.out.println(counter);
-    if (counter != 0)
+    if (stack.size() != 0)
       throw new InvalidTokenException(expression);
       return operandStack.pop().getValue();
     }
