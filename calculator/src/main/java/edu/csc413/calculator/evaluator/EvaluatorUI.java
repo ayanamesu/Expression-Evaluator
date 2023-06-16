@@ -91,7 +91,7 @@ public class EvaluatorUI extends JFrame implements ActionListener {
             // Clears the expression when "C"  is pressed
             expressionTextField.setText("");
         } else if (button.equals("CE")) {
-            // Clears the last entry until the last operator when "CE" button is pressed
+            // Clears the last entry of the last operator when "CE" button is pressed
             String expression = expressionTextField.getText();
             if (!expression.isEmpty()) {
                 expressionTextField.setText(expression.substring(0, expression.length() - 1));
