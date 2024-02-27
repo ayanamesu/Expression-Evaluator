@@ -1,13 +1,3 @@
-# CSC 413 - Project One
-
-## Student Name  : Wing Lee
-
-## Student ID    : 920558688
-
-## Student Email : wlee17@sfsu.edu
-
-### Note failure to completely fill out this README.md could cause you to recieve a  0 for your project until correctly done
-
 # Adding the JUnit 5 Jars to your project.
 
 ### InteliJ
